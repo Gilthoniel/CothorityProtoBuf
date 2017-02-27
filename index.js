@@ -22,15 +22,12 @@ class CothorityProtobuf {
     const msg = model.create(fields);
 
     // Encode the message in a BufferArray
-    const buffer = model.encode(msg).finish();
-
-    // ArrayBuffer to be able to transmit with a websocket
-    return toArrayBuffer(buffer);
+    return model.encode(msg).finish();
   }
   
   decodeMessage(name, arrayBuffer) {
     // ArrayBuffer from the websocket to a Buffer object
-    const buffer = toBuffer(arrayBuffer);
+    const buffer = arrayBuffer;
 
     const model = this.getModel(name);
     return model.decode(buffer);
@@ -39,29 +36,6 @@ class CothorityProtobuf {
   getModel(name) {
     return this.root.lookup(`cothority.${name}`);
   }
-}
-
-/**
- * http://stackoverflow.com/questions/8609289/convert-a-binary-nodejs-buffer-to-javascript-arraybuffer
- * @param buf
- * @returns {ArrayBuffer}
- */
-function toArrayBuffer(buf) {
-  var ab = new ArrayBuffer(buf.length);
-  var view = new Uint8Array(ab);
-  for (var i = 0; i < buf.length; ++i) {
-    view[i] = buf[i];
-  }
-  return ab;
-}
-
-function toBuffer(ab) {
-  var buf = new Buffer(ab.byteLength);
-  var view = new Uint8Array(ab);
-  for (var i = 0; i < buf.length; ++i) {
-    buf[i] = view[i];
-  }
-  return buf;
 }
 
 export default new CothorityProtobuf();
