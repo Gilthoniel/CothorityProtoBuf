@@ -1,0 +1,5 @@
+package cothority;
+
+message Status {
+    map<string, string> field = 1;
+}

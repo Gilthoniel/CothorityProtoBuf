@@ -1,0 +1,7 @@
+package cothority;
+
+import "status.proto";
+
+message StatusResponse {
+    map<string, cothority.Status> system = 1;
+}
