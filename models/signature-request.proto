@@ -1,0 +1,8 @@
+package cothority;
+
+import "roster.proto";
+
+message SignatureRequest {
+    required bytes message = 1;
+    required Roster roster = 2;
+}

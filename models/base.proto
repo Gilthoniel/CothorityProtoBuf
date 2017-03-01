@@ -1,1 +1,3 @@
 import "status-response.proto";
+import "signature-request.proto";
+import "signature-response.proto";

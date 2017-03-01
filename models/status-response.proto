@@ -1,5 +1,7 @@
 package cothority;
 
+import "server-identity.proto";
+
 message StatusResponse {
     map<string, Status> system = 1;
     optional ServerIdentity server = 2;
@@ -7,11 +9,4 @@ message StatusResponse {
 
 message Status {
     map<string, string> field = 1;
-}
-
-message ServerIdentity{
-    required bytes public = 1;
-    required bytes id = 2;
-    required string address = 3;
-    required string description = 4;
 }
