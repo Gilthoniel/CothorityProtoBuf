@@ -43,19 +43,10 @@ describe('Protobuf', () => {
         expect(response.system.Status.field).toBeDefined();
         expect(response.system.Status.field.Description).toBe(mock.description);
 
-        const pub = buf2hex(response.server.public);
+        const pub = CothorityProtobuf.bufferToHex(response.server.public);
         expect(pub).toBe(mock.public);
       });
     });
   });
 
 });
-
-/**
- * http://stackoverflow.com/questions/40031688/javascript-arraybuffer-to-hex
- * @param buffer ArrayBuffer created by Protobuf
- * @returns {*|string}
- */
-function buf2hex(buffer) { // buffer is an ArrayBuffer
-  return Array.prototype.map.call(buffer, x => ('00' + x.toString(16)).slice(-2)).join('');
-}
