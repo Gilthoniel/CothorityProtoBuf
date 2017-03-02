@@ -1,70 +1,46 @@
-import Protobuf from 'protobufjs'
+import CothorityProtobuf from './cothority-protobuf'
 
-class CothorityProtobuf {
-  
-  constructor() {
-    this.protobuf = Protobuf.load('./models/base.proto');
-    this.protobuf
-      .then((root) => {
-        this.root = root;
-      })
-      .catch((e) => console.log(e));
-  }
+class CothorityMessages extends CothorityProtobuf {
   
   /**
-   * Can be used to wait for the end of the parsing
-   * @returns {undefined|Promise.<Root>|void|Promise<Root>|*}
-   */
-  wait() {
-    return this.protobuf;
-  }
-  
-  /**
-   * Encode a model to be transmitted over websocket
-   * @param name
-   * @param fields
+   * Create an encoded message to make a sign request to a cothority node
+   * @param message to sign stored in a Uint8Array
+   * @param servers list of ServerIdentity
    * @returns {*|Buffer|Uint8Array}
    */
-  encodeMessage(name, fields) {
-    // Get the loaded model
-    const model = this.getModel(name);
-    // Create the message with the model
-    const msg = model.create(fields);
-
-    // Encode the message in a BufferArray
-    return model.encode(msg).finish();
+  createSignatureRequest(message, servers) {
+    if (!(message instanceof Uint8Array)) {
+      throw new Error("message must be a instance of Uint8Array");
+    }
+    
+    const fields = {
+      message,
+      roster: {
+        list: servers
+      }
+    };
+    
+    return this.encodeMessage('SignatureRequest', fields);
   }
   
   /**
-   * Decode a message coming from a websocket
-   * @param name
-   * @param arrayBuffer
+   * Return the decoded response
+   * @param response
+   * @returns {*}
    */
-  decodeMessage(name, arrayBuffer) {
-    // ArrayBuffer from the websocket to a Buffer object
-    const buffer = arrayBuffer;
-
-    const model = this.getModel(name);
-    return model.decode(buffer);
+  decodeSignatureResponse(response) {
+    return this.decodeMessage('SignatureResponse', response);
   }
   
   /**
-   * Return the protobuf loaded model
-   * @param name
-   * @returns {ReflectionObject|?ReflectionObject|string}
+   * Return the decoded response
+   * @param response
+   * @returns {*}
    */
-  getModel(name) {
-    return this.root.lookup(`cothority.${name}`);
+  decodeStatusResponse(response) {
+    return this.decodeMessage('StatusResponse', response);
   }
   
-  /**
-   * http://stackoverflow.com/questions/40031688/javascript-arraybuffer-to-hex
-   * @param buffer ArrayBuffer
-   * @returns {*|string}
-   */
-  bufferToHex(buffer) {
-    return Array.prototype.map.call(buffer, x => ('00' + x.toString(16)).slice(-2)).join('');
-  }
 }
 
-export default new CothorityProtobuf();
+export default new CothorityMessages();

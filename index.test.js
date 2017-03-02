@@ -1,74 +1,80 @@
-import CothorityProtobuf from './index'
+import CothorityMessages from './index'
+import ByteBuffer from 'bytebuffer'
 
-const mockStatusResponses = [{
-  base64: "CpsCCgZTdGF0dXMSkAIKOgoSQXZhaWxhYmxlX1NlcnZpY2VzEiRDb1NpLEd1YXJkLElkZW50aXR5LFNraXBjaGFpbixTdGF0dXMKFAoIVFh" +
-  "fYnl0ZXMSCDMwMTc5NDQ3ChQKCFJYX2J5dGVzEgg0MjU5NTczNwoNCgRQb3J0EgU2MjMwNgofCgtEZXNjcmlwdGlvbhIQRGFlaW5hcidzIENvbm9" +
-  "kZQoPCghDb25uVHlwZRIDdGNwCg4KB1ZlcnNpb24SAzEuMAodCgZTeXN0ZW0SE2xpbnV4L2FtZDY0L2dvMS43LjQKFgoESG9zdBIOOTUuMTQzLj" +
-  "E3Mi4yNDEKHgoGVXB0aW1lEhQ0MTRoMzhtMzcuNjQxMjkzNTM1cxJiCiBYit3B+9nEA4aODQrCAD58dTjQqRVPvbPPdygi8OvIJxIQvtA5xn6rW" +
-  "O2N/6E3NV3DfhoadGNwOi8vOTUuMTQzLjE3Mi4yNDE6NjIzMDYiEERhZWluYXIncyBDb25vZGU=",
-  description: "Daeinar's Conode",
-  public: "588addc1fbd9c403868e0d0ac2003e7c7538d0a9154fbdb3cf772822f0ebc827"
-}];
-
-const mockSignatureRequest = [{
-  base64: "CiCAHxMpFWVDC2nQwYfKiXWtrOGwZRS0Aw9T/ZOkwK3ZwxLbBBJeCiDl4j5YU5oJ0yEdj6D7NHXUhlXgwG2D6TyObn0WqofBBhIQsgjTBrNHUfy7s9TpyGWI2RoXdGNwOi8vNzguNDYuMjI3LjYwOjc3NzAiD0luZWl0aSdzIHNlcnZlchJgCiADa/MW4epufpngu3E0GdFsC2eUv53EQsxM82w/k16TzxIQTHNdO8NjVVacTB09sXZd2hoXdGNwOi8vMTkyLjMzLjIxMC44Ojc3NzAiEUVQRkwvREVESVMgQ29ub2RlEm0KIJtU/fuzkTjwpFoI4XIatOslfg8kbJOichVNZRRUdWKQEhBmIqzF2XJbV4rFG+PINEI9Ghl0Y3A6Ly8xODUuMjYuMTU2LjQwOjYxMTE2IhxJc21haWwncyBjb25vZGUgKEB1YmVyc3BhY2UpEmsKIFLGp3x1bOXzvvNBQAbEVVautwhMDz5EZ90nEHknkSxREhAngVp8695Tmb7jB/s9xVgpGhd0Y3A6Ly81LjEzNS4xNjEuOTE6MjAwMCIcTmlra29sYXNnJ3Mgc2VydmVyIGNvdGhvcml0eRJXCiCC6GTQYjDaoukKGsJOxzi82eVFhnfnXx5kqbUUpxHWMBIQXO27l7XxWpuQkfy390DhRhoXdGNwOi8vODMuMjEyLjgyLjIzOjY3ODkiCExlZnRlcmlzEmIKIFiK3cH72cQDho4NCsIAPnx1ONCpFU+9s893KCLw68gnEhC+0DnGfqtY7Y3/oTc1XcN+Ghp0Y3A6Ly85NS4xNDMuMTcyLjI0MTo2MjMwNiIQRGFlaW5hcidzIENvbm9kZQ==",
-  roster: 6,
-  message: '801f13291565430b69d0c187ca8975adace1b06514b4030f53fd93a4c0add9c3'
-}];
-
-describe('Protobuf', () => {
-
-  it('should encode and decode correctly', () => {
-    CothorityProtobuf.wait()
-      .then(() => {
-        const encoded = CothorityProtobuf.encodeMessage('StatusResponse', {
-          system: {
-            status1: {
-              field: {
-                field1: 'success'
-              }
-            }
-          }
-        });
-
-        const decoded = CothorityProtobuf.decodeMessage('StatusResponse', encoded);
-
-        expect(decoded.system.status1.field.field1).toBe('success');
-      })
-      .catch((e) => console.log(e));
-  });
-
-  it('should decode a status response correctly', () => {
-    expect.assertions(mockStatusResponses.length * 5);
+describe('cothority-messages', () => {
+  
+  const mockSignatureRequest = {
+    server: {
+      address: "tcp://78.46.227.60:7770",
+      description: "Ineiti's server",
+      public: "e5e23e58539a09d3211d8fa0fb3475d48655e0c06d83e93c8e6e7d16aa87c106",
+      id: "b208d306b34751fcbbb3d4e9c86588d9"
+    },
+    message: "801f13291565430b69d0c187ca8975adace1b06514b4030f53fd93a4c0add9c3",
+    request: "CiCAHxMpFWVDC2nQwYfKiXWtrOGwZRS0Aw9T/ZOkwK3ZwxJgEl4KIOXiPlhTmgnTIR2PoPs0ddSGVeDAbYPpPI5ufRaqh8EGEhCyCNMGs0dR/Luz1OnIZYjZGhd0Y3A6Ly83OC40Ni4yMjcuNjA6Nzc3MCIPSW5laXRpJ3Mgc2VydmVy"
+  };
+  
+  it('should create a correct signature request', () => {
+    expect.assertions(1);
     
-    return CothorityProtobuf.wait().then(() => {
+    return CothorityMessages.wait().then(() => {
+      const message = ByteBuffer.fromHex(mockSignatureRequest.message).buffer;
+      const servers = [{
+        address: mockSignatureRequest.server.address,
+        description: mockSignatureRequest.server.description,
+        public: ByteBuffer.fromHex(mockSignatureRequest.server.public).buffer,
+        id: ByteBuffer.fromHex(mockSignatureRequest.server.id).buffer
+      }];
+      
+      const data = CothorityMessages.createSignatureRequest(message, servers);
+      expect(ByteBuffer.wrap(data).toBase64()).toBe(mockSignatureRequest.request);
+    });
+  });
+  
+  const mockSignatureResponse = {
+    response: "0a206d6af9d5a3856dcf2cb07772bd8abc8d5f2407b4c808c5f850552457aa42a04c1241290376b59c093b5a378c83cbca0011768bb9cf1660c42e59d2294dcc90cbb4e7c1c187092e0934152fd9f66f337c8a957960ab3acabb805449242e71f4500a0efe",
+    hash: "6d6af9d5a3856dcf2cb07772bd8abc8d5f2407b4c808c5f850552457aa42a04c",
+    signature: "290376b59c093b5a378c83cbca0011768bb9cf1660c42e59d2294dcc90cbb4e7c1c187092e0934152fd9f66f337c8a957960ab3acabb805449242e71f4500a0efe"
+  };
+  
+  it('should decode a signature response', () => {
+    const response = ByteBuffer.fromHex(mockSignatureResponse.response).buffer;
+    const decoded = CothorityMessages.decodeSignatureResponse(response);
+    
+    expect(ByteBuffer.wrap(decoded.hash).toHex()).toBe(mockSignatureResponse.hash);
+    expect(ByteBuffer.wrap(decoded.signature).toHex()).toBe(mockSignatureResponse.signature);
+  });
+  
+  const mockStatusResponses = [{
+    base64: "CpsCCgZTdGF0dXMSkAIKOgoSQXZhaWxhYmxlX1NlcnZpY2VzEiRDb1NpLEd1YXJkLElkZW50aXR5LFNraXBjaGFpbixTdGF0dXMKFAoIVFh" +
+    "fYnl0ZXMSCDMwMTc5NDQ3ChQKCFJYX2J5dGVzEgg0MjU5NTczNwoNCgRQb3J0EgU2MjMwNgofCgtEZXNjcmlwdGlvbhIQRGFlaW5hcidzIENvbm9" +
+    "kZQoPCghDb25uVHlwZRIDdGNwCg4KB1ZlcnNpb24SAzEuMAodCgZTeXN0ZW0SE2xpbnV4L2FtZDY0L2dvMS43LjQKFgoESG9zdBIOOTUuMTQzLj" +
+    "E3Mi4yNDEKHgoGVXB0aW1lEhQ0MTRoMzhtMzcuNjQxMjkzNTM1cxJiCiBYit3B+9nEA4aODQrCAD58dTjQqRVPvbPPdygi8OvIJxIQvtA5xn6rW" +
+    "O2N/6E3NV3DfhoadGNwOi8vOTUuMTQzLjE3Mi4yNDE6NjIzMDYiEERhZWluYXIncyBDb25vZGU=",
+    description: "Daeinar's Conode",
+    public: "588addc1fbd9c403868e0d0ac2003e7c7538d0a9154fbdb3cf772822f0ebc827"
+  }];
+  
+  it('should decode a status response', () => {
+    expect.assertions(mockStatusResponses.length * 4);
+    
+    return CothorityMessages.wait().then(() => {
       mockStatusResponses.forEach((mock) => {
         const buffer = Uint8Array.from(atob(mock.base64), c => c.charCodeAt(0));
-
-        const response = CothorityProtobuf.decodeMessage('StatusResponse', buffer);
-
+        
+        const response = CothorityMessages.decodeStatusResponse(buffer);
+        
         expect(response.system).toBeDefined();
         expect(response.system.Status.field).toBeDefined();
         expect(response.system.Status.field.Description).toBe(mock.description);
-
-        const pub = CothorityProtobuf.bufferToHex(response.server.public);
-        expect(pub).toBe(mock.public);
+        
+        expect(isBuffersEqual(response.server.public, ByteBuffer.fromHex(mock.public))).toBeTruthy();
       });
     });
   });
   
-  it('should decode a signature request correctly', () => {
-    expect.assertions(2);
-    
-    return CothorityProtobuf.wait().then(() => {
-      mockSignatureRequest.forEach((mock) => {
-        const buffer = Uint8Array.from(atob(mock.base64), c => c.charCodeAt(0));
-        const response = CothorityProtobuf.decodeMessage('SignatureRequest', buffer);
-        
-        expect(response.roster.list.length).toBe(mock.roster);
-        expect(CothorityProtobuf.bufferToHex(response.message)).toBe(mock.message);
-      });
-    });
-  });
-
 });
+
+function isBuffersEqual(b1, b2) {
+  return ByteBuffer.wrap(b1).toBase64() === ByteBuffer.wrap(b2).toBase64();
+}
