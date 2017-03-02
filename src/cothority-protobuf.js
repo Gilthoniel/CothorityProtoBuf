@@ -1,22 +1,9 @@
-import Protobuf from 'protobufjs'
+import Root from './models/root'
 
 export default class CothorityProtobuf {
   
   constructor() {
-    this.protobuf = Protobuf.load('./models/base.proto');
-    this.protobuf
-      .then((root) => {
-        this.root = root;
-      })
-      .catch((e) => console.log(e));
-  }
-  
-  /**
-   * Can be used to wait for the end of the parsing
-   * @returns {undefined|Promise.<Root>|void|Promise<Root>|*}
-   */
-  wait() {
-    return this.protobuf;
+    this.root = Root;
   }
   
   /**
