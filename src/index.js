@@ -29,6 +29,8 @@ class CothorityMessages extends CothorityProtobuf {
    * @returns {*}
    */
   decodeSignatureResponse(response) {
+    response = new Uint8Array(response);
+
     return this.decodeMessage('SignatureResponse', response);
   }
   
@@ -38,6 +40,8 @@ class CothorityMessages extends CothorityProtobuf {
    * @returns {*}
    */
   decodeStatusResponse(response) {
+    response = new Uint8Array(response);
+
     return this.decodeMessage('StatusResponse', response);
   }
   
