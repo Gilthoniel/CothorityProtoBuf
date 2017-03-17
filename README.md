@@ -5,8 +5,8 @@ Implementation of messages of the Cothority for protobuf protocl
 
 ```
 npm i
-npm i -g gulp
-gulp build
+npm i -g rollup
+rollup src/index.js --output dist/cothority-messages.js
 ```
 
 # How to use #
