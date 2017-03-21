@@ -38,10 +38,38 @@ const signatureResponse = new Type$5("SignatureResponse")
   .add(new Field$4('hash', 1, 'bytes', 'required'))
   .add(new Field$4('signature', 2, 'bytes', 'required'));
 
+const {Type: Type$6, Field: Field$5} = protobuf;
+
+const StoreSkipBlockRequest = new Type$6("StoreSkipBlockRequest")
+  .add(new Field$5('LatestID', 1, 'bytes'))
+  .add(new Field$5('SkipBlock', 2, 'SkipBlock'));
+
+const {Type: Type$7, Field: Field$6} = protobuf;
+
+const LatestBlockRequest = new Type$7("LatestBlockRequest")
+  .add(new Field$6('LatestID', 1, 'bytes'));
+
+const {Type: Type$8, Field: Field$7} = protobuf;
+
+const SkipBlock = new Type$8("SkipBlock")
+  .add(new Field$7('Index', 1, 'int32'))
+  .add(new Field$7('Hight', 2, 'int32'))
+  .add(new Field$7('MaximumHeight', 3, 'int32'))
+  .add(new Field$7('BaseHeight', 4, 'int32'))
+  .add(new Field$7('BackLinkIDs', 5, 'bytes', 'repeated'))
+  .add(new Field$7('VerifierIDs', 6, 'bytes', 'repeated'))
+  .add(new Field$7('ParentBlockID', 7, 'bytes'))
+  .add(new Field$7('GenesisID', 8, 'bytes'))
+  .add(new Field$7('Data', 9, 'bytes'))
+  .add(new Field$7('Roster', 10, 'Roster'));
+
 const {Root} = protobuf;
 
 const root = new Root();
 root.define("cothority")
+  .add(SkipBlock)
+  .add(LatestBlockRequest)
+  .add(StoreSkipBlockRequest)
   .add(status)
   .add(serverIdentity)
   .add(StatusResponse)
@@ -134,6 +162,34 @@ class CothorityMessages extends CothorityProtobuf {
     response = new Uint8Array(response);
 
     return this.decodeMessage('StatusResponse', response);
+  }
+
+  createStoreSkipBlockRequest(id) {
+    if (!(id instanceof Uint8Array)) {
+      throw new Error("message must be a instance of Uint8Array");
+    }
+
+    return this.encodeMessage('StoreSkipBlockRequest', {
+      LatestID: id,
+      SkipBlock: {
+        Index: 0
+      }
+    });
+  }
+
+  createLatestBlockRequest(id) {
+    if (!(id instanceof Uint8Array)) {
+      throw new Error("message must be a instance of Uint8Array");
+    }
+
+    console.log('test');
+
+    return this.encodeMessage('LatestBlockRequest', {
+      LatestID: id,
+      SkipBlock: {
+        MaximumHeight: 1
+      }
+    });
   }
   
 }
