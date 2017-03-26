@@ -1,8 +1,7 @@
+var CothorityProtobuf = (function (protobuf) {
 'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var protobuf = _interopDefault(require('protobufjs'));
+protobuf = 'default' in protobuf ? protobuf['default'] : protobuf;
 
 var Type = protobuf.Type;
 var Field = protobuf.Field;
@@ -314,4 +313,6 @@ var CothorityMessages = function (_CothorityProtobuf) {
 
 var index = new CothorityMessages();
 
-module.exports = index;
+return index;
+
+}(protobuf));
