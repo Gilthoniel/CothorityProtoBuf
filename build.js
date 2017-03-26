@@ -3,9 +3,7 @@ var babel = require('rollup-plugin-babel');
 
 rollup.rollup({
   entry: 'src/index.js',
-  external: [
-    'protobufjs'
-  ],
+  external: ['protobufjs'],
   plugins: [
     babel({
       babelrc: false,
@@ -14,10 +12,13 @@ rollup.rollup({
   ]
 }).then(
   (bundle) => {
+    console.log('write file');
+
     bundle.write({
-      format: 'cjs',
+      format: 'iife',
+      moduleName: 'CothorityProtobuf',
       dest: 'dist/bundle.js'
     });
   },
-  (e) => console.log(e)
+  (e) => console.log('error', e)
 );

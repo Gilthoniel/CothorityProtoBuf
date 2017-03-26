@@ -1,5 +1,5 @@
-const CothorityMessages = require('../dist/bundle.js');
 import ByteBuffer from 'bytebuffer'
+import CothorityMessages from '../dist/cothority-messages'
 
 describe('cothority-messages', () => {
 

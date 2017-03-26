@@ -10,7 +10,7 @@ npm i -g rollup
 rollup src/index.js --output dist/cothority-messages.js
 ```
 
-CommonJS compilation
+IIFE compilation
 ````
 npm i
 node build.js
@@ -27,9 +27,4 @@ import CothorityMessages from './dist/cothority-messages'
 CothorityMessages.createSignatureRequest(...);
 ```
 
-In the case of the CommonJS compilation, you can use it this way
-````
-var CothorityMessages = require('./dist/bundle.js');
-
-CothorityMessages.createSignatureRequest(...);
-````
+In the case of the IIFE compilation you can import the scripts in <script></script> tag using both `bundle.js` and `protobuf.js`
