@@ -123,6 +123,46 @@ class CothorityMessages extends CothorityProtobuf {
 
       return this.decodeMessage('FinalizeResponse', response);
   }
+
+  createStoreSkipBlockRequest(id, servers) {
+    if (!(id instanceof Uint8Array)) {
+      throw new Error("message must be a instance of Uint8Array");
+    }
+
+    return this.encodeMessage('StoreSkipBlockRequest', {
+      LatestID: id,
+      NewBlock: {
+        MaximumHeight: 1,
+        BaseHeight: 1,
+        Data: new Uint8Array([]),
+        Roster: {
+          list: servers
+        }
+      }
+    });
+  }
+
+  decodeStoreSkipBlockResponse(response) {
+    response = new Uint8Array(response);
+
+    return this.decodeMessage('StoreSkipBlockResponse', response);
+  }
+
+  createLatestBlockRequest(id) {
+    if (!(id instanceof Uint8Array)) {
+      throw new Error("message must be a instance of Uint8Array");
+    }
+
+    return this.encodeMessage('LatestBlockRequest', {
+      LatestID: id
+    });
+  }
+
+  decodeLatestBlockResponse(response) {
+    response = new Uint8Array(response);
+
+    return this.decodeMessage('LatestBlockResponse', response);
+  }
 }
 
 export default new CothorityMessages();
