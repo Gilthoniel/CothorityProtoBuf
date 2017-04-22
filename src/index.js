@@ -163,6 +163,44 @@ class CothorityMessages extends CothorityProtobuf {
 
     return this.decodeMessage('LatestBlockResponse', response);
   }
+
+  createConfigUpdate(id) {
+      const fields = {
+          id: id
+      };
+
+      return this.encodeMessage('ConfigUpdate', fields);
+  }
+
+  createDevice(key) {
+
+      const model = this.getModel('Device');
+
+      const fields = {
+          point: key
+      };
+
+      return model.create(fields);
+  }
+
+  decodeConfigUpdateReply(response) {
+    response = new Uint8Array(response);
+
+    return this.decodeMessage('ConfigUpdateReply', response);
+  }
+
+  createProposeSend(id, config) {
+      const fields = {
+          id: id,
+          config: {
+              Threshold: config.Threshold,
+              Device: config.Device,
+              Data: config.Data
+          }
+      };
+
+      return this.encodeMessage('ProposeSend', fields);
+  }
 }
 
 export default new CothorityMessages();

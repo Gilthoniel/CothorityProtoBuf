@@ -18,6 +18,11 @@ import FinalizeRequest from './pop/finalize-request'
 import FinalizeResponse from './pop/finalize-response'
 import PopDesc from './pop/pop-desc'
 import FinalStatement from './pop/final-statement'
+import Config from './cisc/config'
+import ConfigUpdate from './cisc/config-update'
+import ConfigUpdateReply from './cisc/config-update-reply'
+import ProposeSend from './cisc/propose-send'
+import Device from './cisc/device'
 
 const {Root} = protobuf;
 
@@ -41,6 +46,11 @@ root.define("cothority")
     .add(FinalizeRequest)
     .add(FinalizeResponse)
     .add(PopDesc)
-    .add(FinalStatement);
+    .add(FinalStatement)
+    .add(Device)
+    .add(Config)
+    .add(ConfigUpdate)
+    .add(ConfigUpdateReply)
+    .add(ProposeSend);
 
 export default root;
