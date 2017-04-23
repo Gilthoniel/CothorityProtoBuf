@@ -123,7 +123,7 @@ var Field$18 = protobuf.Field;
 var MapField$2 = protobuf.MapField;
 
 
-var config = new Type$19("Config").add(new Field$18('Threshold', 1, 'sint32')).add(new MapField$2('Device', 2, 'string', 'Device')).add(new MapField$2('Data', 3, 'string', 'string'));
+var config = new Type$19("Config").add(new Field$18('threshold', 1, 'sint32')).add(new MapField$2('device', 2, 'string', 'Device')).add(new MapField$2('data', 3, 'string', 'string'));
 
 var Type$20 = protobuf.Type;
 var Field$19 = protobuf.Field;
@@ -141,7 +141,7 @@ var Type$22 = protobuf.Type;
 var Field$21 = protobuf.Field;
 
 
-var proposeSend = new Type$22("ProposeSend").add(new Field$21('id', 1, 'bytes')).add(new Field$21('config', 2, 'Config', 'repeated'));
+var proposeSend = new Type$22("ProposeSend").add(new Field$21('id', 1, 'bytes')).add(new Field$21('config', 2, 'Config'));
 
 var Type$23 = protobuf.Type;
 var Field$22 = protobuf.Field;
@@ -508,9 +508,9 @@ var CothorityMessages = function (_CothorityProtobuf) {
       var fields = {
         id: id,
         config: {
-          Threshold: config.Threshold,
-          Device: config.Device,
-          Data: config.Data
+          threshold: config.threshold,
+          device: config.device,
+          data: config.data
         }
       };
 

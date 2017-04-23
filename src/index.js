@@ -184,18 +184,18 @@ class CothorityMessages extends CothorityProtobuf {
   }
 
   decodeConfigUpdateReply(response) {
-    response = new Uint8Array(response);
+      response = new Uint8Array(response);
 
-    return this.decodeMessage('ConfigUpdateReply', response);
+      return this.decodeMessage('ConfigUpdateReply', response);
   }
 
   createProposeSend(id, config) {
       const fields = {
           id: id,
           config: {
-              Threshold: config.Threshold,
-              Device: config.Device,
-              Data: config.Data
+              threshold: config.threshold,
+              device: config.device,
+              data: config.data
           }
       };
 
