@@ -7,12 +7,14 @@ ES6 compilation
 ```
 npm i
 npm i -g rollup
+node build_proto.js # transpile the *.proto files
 rollup src/index.js --output dist/cothority-messages.js
 ```
 
 IIFE compilation
 ````
 npm i
+node build_proto.js
 node build.js
 ````
 

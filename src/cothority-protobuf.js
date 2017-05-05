@@ -38,6 +38,6 @@ export default class CothorityProtobuf {
    * @returns {ReflectionObject|?ReflectionObject|string}
    */
   getModel(name) {
-    return this.root.lookup(`cothority.${name}`);
+    return this.root.lookup(`${name}`);
   }
 }

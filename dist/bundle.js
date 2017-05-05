@@ -3,84 +3,12 @@ var CothorityProtobuf = (function (protobuf) {
 
 protobuf = 'default' in protobuf ? protobuf['default'] : protobuf;
 
-var Type = protobuf.Type;
-var Field = protobuf.Field;
-var MapField = protobuf.MapField;
-
-
-var StatusResponse = new Type('StatusResponse').add(new MapField('system', 1, 'string', 'Status')).add(new Field('server', 2, 'ServerIdentity'));
-
-var Type$1 = protobuf.Type;
-var MapField$1 = protobuf.MapField;
-
-
-var status = new Type$1('Status').add(new MapField$1('field', 1, 'string', 'string'));
-
-var Type$2 = protobuf.Type;
-var Field$1 = protobuf.Field;
-
-
-var serverIdentity = new Type$2('ServerIdentity').add(new Field$1('public', 1, 'bytes')).add(new Field$1('id', 2, 'bytes')).add(new Field$1('address', 3, 'string')).add(new Field$1('description', 4, 'string'));
-
-var Type$3 = protobuf.Type;
-var Field$2 = protobuf.Field;
-
-
-var roster = new Type$3("Roster").add(new Field$2('id', 1, 'bytes')).add(new Field$2('list', 2, 'ServerIdentity', 'repeated')).add(new Field$2('aggregate', 3, 'bytes'));
-
-var Type$4 = protobuf.Type;
-var Field$3 = protobuf.Field;
-
-
-var signatureRequest = new Type$4("SignatureRequest").add(new Field$3('message', 1, 'bytes')).add(new Field$3('roster', 2, 'Roster'));
-
-var Type$5 = protobuf.Type;
-var Field$4 = protobuf.Field;
-
-
-var signatureResponse = new Type$5("SignatureResponse").add(new Field$4('hash', 1, 'bytes', 'required')).add(new Field$4('signature', 2, 'bytes', 'required'));
-
-var Type$6 = protobuf.Type;
-var Field$5 = protobuf.Field;
-
-
-var StoreSkipBlockRequest = new Type$6("StoreSkipBlockRequest").add(new Field$5('LatestID', 1, 'bytes')).add(new Field$5('NewBlock', 2, 'SkipBlock'));
-
-var Type$7 = protobuf.Type;
-var Field$6 = protobuf.Field;
-
-
-var StoreSkipBlockResponse = new Type$7("StoreSkipBlockResponse").add(new Field$6('Previous', 1, 'SkipBlock')).add(new Field$6('Latest', 2, 'SkipBlock'));
-
-var Type$8 = protobuf.Type;
-var Field$7 = protobuf.Field;
-
-
-var LatestBlockRequest = new Type$8("LatestBlockRequest").add(new Field$7('LatestID', 1, 'bytes'));
-
-var Type$9 = protobuf.Type;
-var Field$8 = protobuf.Field;
-
-
-var LatestBlockResponse = new Type$9("LatestBlockResponse").add(new Field$8('Update', 1, 'SkipBlock', 'repeated'));
-
-var Type$10 = protobuf.Type;
-var Field$9 = protobuf.Field;
-
-
-var SkipBlock = new Type$10("SkipBlock").add(new Field$9('Index', 1, 'sint32')).add(new Field$9('Height', 2, 'sint32')).add(new Field$9('MaximumHeight', 3, 'sint32')).add(new Field$9('BaseHeight', 4, 'sint32')).add(new Field$9('BackLinkIDs', 5, 'bytes', 'repeated')).add(new Field$9('VerifierIDs', 6, 'bytes', 'repeated')).add(new Field$9('ParentBlockID', 7, 'bytes')).add(new Field$9('GenesisID', 8, 'bytes')).add(new Field$9('RespPublic', 9, 'bytes', 'repeated')).add(new Field$9('Data', 10, 'bytes')).add(new Field$9('Roster', 11, 'Roster')).add(new Field$9('Hash', 12, 'bytes')).add(new Field$9('ForwardLink', 13, 'BlockLink', 'repeated')).add(new Field$9('ChildSL', 14, 'bytes'));
-
-var Type$11 = protobuf.Type;
-var Field$10 = protobuf.Field;
-
-
-var BlockLink = new Type$11("BlockLink").add(new Field$10('Hash', 1, 'bytes')).add(new Field$10('Signature', 2, 'bytes'));
+var skeleton = '{"nested":{"cothority":{},"BlockLink":{"fields":{"Hash":{"rule":"required","type":"bytes","id":1},"Signature":{"rule":"required","type":"bytes","id":2}}},"LatestBlockRequest":{"fields":{"LatestID":{"rule":"required","type":"bytes","id":1}}},"LatestBlockResponse":{"fields":{"Update":{"rule":"repeated","type":"SkipBlock","id":1,"options":{"packed":false}}}},"Roster":{"fields":{"id":{"type":"bytes","id":1},"list":{"rule":"repeated","type":"ServerIdentity","id":2,"options":{"packed":false}},"aggregate":{"type":"bytes","id":3}}},"ServerIdentity":{"fields":{"public":{"rule":"required","type":"bytes","id":1},"id":{"rule":"required","type":"bytes","id":2},"address":{"rule":"required","type":"string","id":3},"description":{"rule":"required","type":"string","id":4}}},"SignatureRequest":{"fields":{"message":{"rule":"required","type":"bytes","id":1},"roster":{"rule":"required","type":"Roster","id":2}}},"SignatureResponse":{"fields":{"hash":{"rule":"required","type":"bytes","id":1},"signature":{"rule":"required","type":"bytes","id":2}}},"SkipBlock":{"fields":{"test":{"type":"sint32","id":1},"Height":{"type":"sint32","id":2},"MaximumHeight":{"type":"sint32","id":3},"BaseHeight":{"type":"sint32","id":4},"BackLinkIDs":{"rule":"repeated","type":"bytes","id":5,"options":{"packed":false}},"VerifierIDs":{"rule":"repeated","type":"bytes","id":6,"options":{"packed":false}},"ParentBlockID":{"type":"bytes","id":7},"GenesisID":{"type":"bytes","id":8},"Data":{"type":"bytes","id":9},"Roster":{"type":"Roster","id":10},"Hash":{"type":"bytes","id":11},"ForwardLink":{"rule":"repeated","type":"BlockLink","id":12,"options":{"packed":false}},"ChildSL":{"type":"bytes","id":13}}},"StatusResponse":{"fields":{"system":{"keyType":"string","type":"Status","id":1},"server":{"type":"ServerIdentity","id":2}},"nested":{"Status":{"fields":{"field":{"keyType":"string","type":"string","id":1}}}}},"StoreSkipBlockRequest":{"fields":{"LatestID":{"rule":"required","type":"bytes","id":1},"NewBlock":{"rule":"required","type":"SkipBlock","id":2}}},"StoreSkipBlockResponse":{"fields":{"Previous":{"rule":"required","type":"SkipBlock","id":1},"Latest":{"rule":"required","type":"SkipBlock","id":2}}}}}';
 
 var Root = protobuf.Root;
 
 
-var root = new Root();
-root.define("cothority").add(SkipBlock).add(serverIdentity).add(roster).add(BlockLink).add(LatestBlockRequest).add(LatestBlockResponse).add(StoreSkipBlockRequest).add(StoreSkipBlockResponse).add(status).add(StatusResponse).add(signatureRequest).add(signatureResponse);
+var root = Root.fromJSON(JSON.parse(skeleton));
 
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -197,7 +125,7 @@ var CothorityProtobuf = function () {
   }, {
     key: 'getModel',
     value: function getModel(name) {
-      return this.root.lookup('cothority.' + name);
+      return this.root.lookup('' + name);
     }
   }]);
   return CothorityProtobuf;

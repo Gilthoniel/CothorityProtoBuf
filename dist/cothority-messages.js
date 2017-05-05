@@ -1,81 +1,10 @@
 import protobuf from 'protobufjs';
 
-const {Type, Field, MapField} = protobuf;
-
-const StatusResponse = new Type('StatusResponse')
-  .add(new MapField('system', 1, 'string', 'Status'))
-  .add(new Field('server', 2, 'ServerIdentity'));
-
-const {Type: Type$1, MapField: MapField$1} = protobuf;
-
-const status = new Type$1('Status')
-  .add(new MapField$1('field', 1, 'string', 'string'));
-
-const {Type: Type$2, Field: Field$1} = protobuf;
-
-const serverIdentity = new Type$2('ServerIdentity')
-  .add(new Field$1('public', 1, 'bytes'))
-  .add(new Field$1('id', 2, 'bytes'))
-  .add(new Field$1('address', 3, 'string'))
-  .add(new Field$1('description', 4, 'string'));
-
-const {Type: Type$3, Field: Field$2} = protobuf;
-
-const roster = new Type$3("Roster")
-  .add(new Field$2('id', 1, 'bytes'))
-  .add(new Field$2('list', 2, 'ServerIdentity', 'repeated'))
-  .add(new Field$2('aggregate', 3, 'bytes'));
-
-const {Type: Type$4, Field: Field$3} = protobuf;
-
-const signatureRequest = new Type$4("SignatureRequest")
-  .add(new Field$3('message', 1, 'bytes'))
-  .add(new Field$3('roster', 2, 'Roster'));
-
-const {Type: Type$5, Field: Field$4} = protobuf;
-
-const signatureResponse = new Type$5("SignatureResponse")
-  .add(new Field$4('hash', 1, 'bytes', 'required'))
-  .add(new Field$4('signature', 2, 'bytes', 'required'));
-
-const {Type: Type$6, Field: Field$5} = protobuf;
-
-const StoreSkipBlockRequest = new Type$6("StoreSkipBlockRequest")
-  .add(new Field$5('LatestID', 1, 'bytes'))
-  .add(new Field$5('SkipBlock', 2, 'SkipBlock'));
-
-const {Type: Type$7, Field: Field$6} = protobuf;
-
-const LatestBlockRequest = new Type$7("LatestBlockRequest")
-  .add(new Field$6('LatestID', 1, 'bytes'));
-
-const {Type: Type$8, Field: Field$7} = protobuf;
-
-const SkipBlock = new Type$8("SkipBlock")
-  .add(new Field$7('Index', 1, 'int32'))
-  .add(new Field$7('Hight', 2, 'int32'))
-  .add(new Field$7('MaximumHeight', 3, 'int32'))
-  .add(new Field$7('BaseHeight', 4, 'int32'))
-  .add(new Field$7('BackLinkIDs', 5, 'bytes', 'repeated'))
-  .add(new Field$7('VerifierIDs', 6, 'bytes', 'repeated'))
-  .add(new Field$7('ParentBlockID', 7, 'bytes'))
-  .add(new Field$7('GenesisID', 8, 'bytes'))
-  .add(new Field$7('Data', 9, 'bytes'))
-  .add(new Field$7('Roster', 10, 'Roster'));
+var skeleton = '{"nested":{"cothority":{},"BlockLink":{"fields":{"Hash":{"rule":"required","type":"bytes","id":1},"Signature":{"rule":"required","type":"bytes","id":2}}},"LatestBlockRequest":{"fields":{"LatestID":{"rule":"required","type":"bytes","id":1}}},"LatestBlockResponse":{"fields":{"Update":{"rule":"repeated","type":"SkipBlock","id":1,"options":{"packed":false}}}},"Roster":{"fields":{"id":{"type":"bytes","id":1},"list":{"rule":"repeated","type":"ServerIdentity","id":2,"options":{"packed":false}},"aggregate":{"type":"bytes","id":3}}},"ServerIdentity":{"fields":{"public":{"rule":"required","type":"bytes","id":1},"id":{"rule":"required","type":"bytes","id":2},"address":{"rule":"required","type":"string","id":3},"description":{"rule":"required","type":"string","id":4}}},"SignatureRequest":{"fields":{"message":{"rule":"required","type":"bytes","id":1},"roster":{"rule":"required","type":"Roster","id":2}}},"SignatureResponse":{"fields":{"hash":{"rule":"required","type":"bytes","id":1},"signature":{"rule":"required","type":"bytes","id":2}}},"SkipBlock":{"fields":{"test":{"type":"sint32","id":1},"Height":{"type":"sint32","id":2},"MaximumHeight":{"type":"sint32","id":3},"BaseHeight":{"type":"sint32","id":4},"BackLinkIDs":{"rule":"repeated","type":"bytes","id":5,"options":{"packed":false}},"VerifierIDs":{"rule":"repeated","type":"bytes","id":6,"options":{"packed":false}},"ParentBlockID":{"type":"bytes","id":7},"GenesisID":{"type":"bytes","id":8},"Data":{"type":"bytes","id":9},"Roster":{"type":"Roster","id":10},"Hash":{"type":"bytes","id":11},"ForwardLink":{"rule":"repeated","type":"BlockLink","id":12,"options":{"packed":false}},"ChildSL":{"type":"bytes","id":13}}},"StatusResponse":{"fields":{"system":{"keyType":"string","type":"Status","id":1},"server":{"type":"ServerIdentity","id":2}},"nested":{"Status":{"fields":{"field":{"keyType":"string","type":"string","id":1}}}}},"StoreSkipBlockRequest":{"fields":{"LatestID":{"rule":"required","type":"bytes","id":1},"NewBlock":{"rule":"required","type":"SkipBlock","id":2}}},"StoreSkipBlockResponse":{"fields":{"Previous":{"rule":"required","type":"SkipBlock","id":1},"Latest":{"rule":"required","type":"SkipBlock","id":2}}}}}';
 
 const {Root} = protobuf;
 
-const root = new Root();
-root.define("cothority")
-  .add(SkipBlock)
-  .add(LatestBlockRequest)
-  .add(StoreSkipBlockRequest)
-  .add(status)
-  .add(serverIdentity)
-  .add(StatusResponse)
-  .add(roster)
-  .add(signatureRequest)
-  .add(signatureResponse);
+const root = Root.fromJSON(JSON.parse(skeleton));
 
 class CothorityProtobuf {
   
@@ -115,7 +44,7 @@ class CothorityProtobuf {
    * @returns {ReflectionObject|?ReflectionObject|string}
    */
   getModel(name) {
-    return this.root.lookup(`cothority.${name}`);
+    return this.root.lookup(`${name}`);
   }
 }
 
@@ -164,17 +93,28 @@ class CothorityMessages extends CothorityProtobuf {
     return this.decodeMessage('StatusResponse', response);
   }
 
-  createStoreSkipBlockRequest(id) {
+  createStoreSkipBlockRequest(id, servers) {
     if (!(id instanceof Uint8Array)) {
       throw new Error("message must be a instance of Uint8Array");
     }
 
     return this.encodeMessage('StoreSkipBlockRequest', {
       LatestID: id,
-      SkipBlock: {
-        Index: 0
+      NewBlock: {
+        MaximumHeight: 1,
+        BaseHeight: 1,
+        Data: new Uint8Array([]),
+        Roster: {
+          list: servers
+        }
       }
     });
+  }
+
+  decodeStoreSkipBlockResponse(response) {
+    response = new Uint8Array(response);
+
+    return this.decodeMessage('StoreSkipBlockResponse', response);
   }
 
   createLatestBlockRequest(id) {
@@ -182,14 +122,15 @@ class CothorityMessages extends CothorityProtobuf {
       throw new Error("message must be a instance of Uint8Array");
     }
 
-    console.log('test');
-
     return this.encodeMessage('LatestBlockRequest', {
-      LatestID: id,
-      SkipBlock: {
-        MaximumHeight: 1
-      }
+      LatestID: id
     });
+  }
+
+  decodeLatestBlockResponse(response) {
+    response = new Uint8Array(response);
+
+    return this.decodeMessage('LatestBlockResponse', response);
   }
   
 }
@@ -197,3 +138,4 @@ class CothorityMessages extends CothorityProtobuf {
 var index = new CothorityMessages();
 
 export default index;
+//# sourceMappingURL=cothority-messages.js.map
