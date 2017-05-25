@@ -172,6 +172,13 @@ class CothorityMessages extends CothorityProtobuf {
       return this.encodeMessage('ConfigUpdate', fields);
   }
 
+
+  decodeConfigUpdateReply(response) {
+      response = new Uint8Array(response);
+
+      return this.decodeMessage('ConfigUpdateReply', response);
+  }
+
   createDevice(key) {
 
       const model = this.getModel('Device');
@@ -181,12 +188,6 @@ class CothorityMessages extends CothorityProtobuf {
       };
 
       return model.create(fields);
-  }
-
-  decodeConfigUpdateReply(response) {
-      response = new Uint8Array(response);
-
-      return this.decodeMessage('ConfigUpdateReply', response);
   }
 
   createProposeSend(id, config) {
@@ -201,6 +202,31 @@ class CothorityMessages extends CothorityProtobuf {
 
       return this.encodeMessage('ProposeSend', fields);
   }
+
+    createProposeUpdate(id) {
+        const fields = {
+            id: id
+        };
+
+        return this.encodeMessage('ProposeUpdate', fields);
+    }
+
+
+    decodeProposeUpdateReply(response) {
+        response = new Uint8Array(response);
+
+        return this.decodeMessage('ProposeUpdateReply', response);
+    }
+
+    createProposeVote(id, signer, signature) {
+        const fields = {
+            id: id,
+            signer: signer,
+            signature: signature
+        };
+
+        return this.encodeMessage('ProposeVote', fields);
+    }
 }
 
 export default new CothorityMessages();

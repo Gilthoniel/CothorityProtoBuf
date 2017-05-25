@@ -23,6 +23,10 @@ import ConfigUpdate from './cisc/config-update'
 import ConfigUpdateReply from './cisc/config-update-reply'
 import ProposeSend from './cisc/propose-send'
 import Device from './cisc/device'
+import ProposeUpdate from './cisc/propose-update'
+import ProposeUpdateReply from './cisc/propose-update-reply'
+import SchnorrSig from './cisc/schnorr-sig'
+import ProposeVote from './cisc/propose-vote'
 
 const {Root} = protobuf;
 
@@ -51,6 +55,10 @@ root.define("cothority")
     .add(Config)
     .add(ConfigUpdate)
     .add(ConfigUpdateReply)
-    .add(ProposeSend);
+    .add(ProposeSend)
+    .add(ProposeUpdate)
+    .add(ProposeUpdateReply)
+    .add(SchnorrSig)
+    .add(ProposeVote);
 
 export default root;
