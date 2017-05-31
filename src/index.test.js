@@ -69,6 +69,27 @@ describe('cothority-messages', () => {
     });
   });
 
+  it('should create a random request', () => {
+    expect(CothorityMessages.createRandomMessage()).toBeDefined();
+  });
+
+  it('should decode a random response', () => {
+    const msg = CothorityMessages.encodeMessage('RandomResponse', {
+      R: new Uint8Array([]),
+      T: {
+        nodes: 1,
+        groups: 2,
+        purpose: 'test',
+        time: Date.now()
+      }
+    });
+
+    const decoded = CothorityMessages.decodeRandomResponse(msg);
+    expect(decoded.T.nodes).toBe(1);
+    expect(decoded.R).toBeDefined();
+    expect(decoded.T.time).toBeDefined();
+  });
+
 });
 
 function isBuffersEqual(b1, b2) {

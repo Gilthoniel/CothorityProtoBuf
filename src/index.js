@@ -1,5 +1,10 @@
 import CothorityProtobuf from './cothority-protobuf'
 
+/**
+ * Helpers to encode and decode messages of the Cothority
+ *
+ * @author Gaylor Bosson (gaylor.bosson@epfl.ch)
+ */
 class CothorityMessages extends CothorityProtobuf {
   
   /**
@@ -83,6 +88,16 @@ class CothorityMessages extends CothorityProtobuf {
     response = new Uint8Array(response);
 
     return this.decodeMessage('LatestBlockResponse', response);
+  }
+
+  createRandomMessage() {
+    return this.encodeMessage('RandomRequest');
+  }
+
+  decodeRandomResponse(response) {
+    response = new Uint8Array(response);
+
+    return this.decodeMessage('RandomResponse', response);
   }
   
 }

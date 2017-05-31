@@ -1,6 +1,6 @@
 
 message SkipBlock {
-    optional sint32 test = 1;
+    optional sint32 Index = 1;
     optional sint32 Height = 2;
     optional sint32 MaximumHeight = 3;
     optional sint32 BaseHeight = 4;
