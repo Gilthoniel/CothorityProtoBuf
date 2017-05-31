@@ -1,0 +1,3 @@
+message ConfigUpdateReply {
+    optional Config config = 1;
+}

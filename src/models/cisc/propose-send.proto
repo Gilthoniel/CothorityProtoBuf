@@ -1,0 +1,4 @@
+message ProposeSend {
+    optional bytes id = 1;
+    optional Config config = 2;
+}

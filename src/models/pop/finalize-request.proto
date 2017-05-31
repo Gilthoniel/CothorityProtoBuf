@@ -1,0 +1,4 @@
+message FinalizeRequest {
+    optional bytes descId = 1;
+    optional bytes attendees = 2;
+}

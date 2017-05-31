@@ -1,0 +1,5 @@
+message FinalStatement {
+    optional PopDesc desc = 1;
+    optional bytes attendees = 2;
+    optional bytes signature = 3;
+}

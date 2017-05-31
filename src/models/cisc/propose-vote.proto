@@ -1,0 +1,5 @@
+message ProposeVote {
+    optional bytes id = 1;
+    optional string signer = 2;
+    optional SchnorrSig signature = 3;
+}

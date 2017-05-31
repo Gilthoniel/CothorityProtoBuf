@@ -1,0 +1,3 @@
+message StoreConfig {
+    optional PopDesc desc = 1;
+}

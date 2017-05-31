@@ -1,0 +1,5 @@
+message Config {
+    optional sint32 threshold = 1;
+    map<string, Device> device = 2;
+    map<string,string> data = 3;
+}

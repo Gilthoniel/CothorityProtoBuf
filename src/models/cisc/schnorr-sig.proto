@@ -1,0 +1,4 @@
+message SchnorrSig {
+    optional bytes challenge = 1;
+    optional bytes response = 2;
+}

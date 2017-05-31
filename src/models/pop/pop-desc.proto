@@ -1,0 +1,6 @@
+message PopDesc {
+    optional string name = 1;
+    optional string dateTime = 2;
+    optional string location = 3;
+    optional Roster roster = 4;
+}

@@ -1,0 +1,4 @@
+message PinRequest {
+    optional string pin = 1;
+    optional bytes public = 2;
+}

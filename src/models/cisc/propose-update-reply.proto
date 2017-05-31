@@ -1,0 +1,3 @@
+message ProposeUpdateReply {
+    optional Config propose = 1;
+}

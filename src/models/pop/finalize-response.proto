@@ -1,0 +1,3 @@
+message FinalizeResponse {
+    optional FinalStatement final = 1;
+}

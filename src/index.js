@@ -6,7 +6,7 @@ import CothorityProtobuf from './cothority-protobuf'
  * @author Gaylor Bosson (gaylor.bosson@epfl.ch)
  */
 class CothorityMessages extends CothorityProtobuf {
-  
+
   /**
    * Create an encoded message to make a sign request to a cothority node
    * @param {Uint8Array} message - Message to sign stored in a Uint8Array
@@ -17,17 +17,17 @@ class CothorityMessages extends CothorityProtobuf {
     if (!(message instanceof Uint8Array)) {
       throw new Error("message must be a instance of Uint8Array");
     }
-    
+
     const fields = {
       message,
       roster: {
         list: servers
       }
     };
-    
+
     return this.encodeMessage('SignatureRequest', fields);
   }
-  
+
   /**
    * Return the decoded response of a signature request
    * @param {*|Buffer|Uint8Array} response - Response of the Cothority
@@ -38,7 +38,7 @@ class CothorityMessages extends CothorityProtobuf {
 
     return this.decodeMessage('SignatureResponse', response);
   }
-  
+
   /**
    * Return the decoded response of a status request
    * @param {*|Buffer|Uint8Array} response - Response of the Cothority
@@ -219,9 +219,9 @@ class CothorityMessages extends CothorityProtobuf {
 
 
   decodeConfigUpdateReply(response) {
-      response = new Uint8Array(response);
+    response = new Uint8Array(response);
 
-      return this.decodeMessage('ConfigUpdateReply', response);
+    return this.decodeMessage('ConfigUpdateReply', response);
   }
 
   createDevice(key) {
@@ -236,42 +236,42 @@ class CothorityMessages extends CothorityProtobuf {
   }
 
   createProposeSend(id, config) {
-      const fields = {
-          id: id,
-          config: {
-              threshold: config.threshold,
-              device: config.device,
-              data: config.data
-          }
-      };
+    const fields = {
+      id: id,
+      config: {
+        threshold: config.threshold,
+        device: config.device,
+        data: config.data
+      }
+    };
 
     return this.encodeMessage('ProposeSend', fields);
   }
 
-    createProposeUpdate(id) {
-        const fields = {
-            id: id
-        };
+  createProposeUpdate(id) {
+    const fields = {
+      id: id
+    };
 
-        return this.encodeMessage('ProposeUpdate', fields);
-    }
+    return this.encodeMessage('ProposeUpdate', fields);
+  }
 
 
-    decodeProposeUpdateReply(response) {
-        response = new Uint8Array(response);
+  decodeProposeUpdateReply(response) {
+    response = new Uint8Array(response);
 
-        return this.decodeMessage('ProposeUpdateReply', response);
-    }
+    return this.decodeMessage('ProposeUpdateReply', response);
+  }
 
-    createProposeVote(id, signer, signature) {
-        const fields = {
-            id: id,
-            signer: signer,
-            signature: signature
-        };
+  createProposeVote(id, signer, signature) {
+    const fields = {
+      id: id,
+      signer: signer,
+      signature: signature
+    };
 
-        return this.encodeMessage('ProposeVote', fields);
-    }
+    return this.encodeMessage('ProposeVote', fields);
+  }
 }
 
 /**
