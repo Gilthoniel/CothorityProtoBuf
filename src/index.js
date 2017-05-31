@@ -263,11 +263,14 @@ class CothorityMessages extends CothorityProtobuf {
     return this.decodeMessage('ProposeUpdateReply', response);
   }
 
-  createProposeVote(id, signer, signature) {
+  createProposeVote(id, signer, challenge, response) {
     const fields = {
       id: id,
       signer: signer,
-      signature: signature
+        signature: {
+          challenge: challenge,
+          response: response
+        }
     };
 
     return this.encodeMessage('ProposeVote', fields);
