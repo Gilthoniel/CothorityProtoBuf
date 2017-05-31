@@ -1,5 +1,5 @@
 import ByteBuffer from 'bytebuffer'
-import CothorityMessages from '../dist/cothority-messages'
+import CothorityMessages from './index'
 
 describe('cothority-messages', () => {
 

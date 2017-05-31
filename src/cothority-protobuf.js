@@ -1,15 +1,24 @@
 import Root from './models/root'
 
+/**
+ * Base class for the protobuf library that provides helpers to encode and decode
+ * messages according to a given model
+ *
+ * @author Gaylor Bosson (gaylor.bosson@epfl.ch)
+ */
 export default class CothorityProtobuf {
-  
+
+  /**
+   * @constructor
+   */
   constructor() {
     this.root = Root;
   }
   
   /**
    * Encode a model to be transmitted over websocket
-   * @param name
-   * @param fields
+   * @param {String} name
+   * @param {Object} fields
    * @returns {*|Buffer|Uint8Array}
    */
   encodeMessage(name, fields) {
@@ -24,8 +33,8 @@ export default class CothorityProtobuf {
   
   /**
    * Decode a message coming from a websocket
-   * @param name
-   * @param buffer
+   * @param {String} name
+   * @param {*|Buffer|Uint8Array} buffer
    */
   decodeMessage(name, buffer) {
     const model = this.getModel(name);
@@ -34,7 +43,7 @@ export default class CothorityProtobuf {
   
   /**
    * Return the protobuf loaded model
-   * @param name
+   * @param {String} name
    * @returns {ReflectionObject|?ReflectionObject|string}
    */
   getModel(name) {

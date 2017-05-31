@@ -1,0 +1,21 @@
+{
+  "source": "./src",
+  "destination": "./doc",
+  "includes": [
+    "\\.js$"
+  ],
+  "excludes": [
+    ".*skeleton\\.js$",
+    ".*\\.test\\.js$"
+  ],
+  "experimentalProposal": {
+    "classProperties": true,
+    "objectRestSpread": true,
+    "decorators": true,
+    "doExpressions": true,
+    "functionBind": true,
+    "asyncGenerators": true,
+    "exportExtensions": true,
+    "dynamicImport": true
+  }
+}

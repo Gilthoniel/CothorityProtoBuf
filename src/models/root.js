@@ -1,7 +1,10 @@
-import protobuf from "protobufjs";
+import protobuf from "protobufjs"
 import skeleton from './skeleton'
+
 const {Root} = protobuf;
 
-const root = Root.fromJSON(JSON.parse(skeleton));
-
-export default root;
+/**
+ * As we need to create a bundle, we cannot use the *.proto files and the a script will wrap
+ * them in a skeleton file that contains the JSON representation that can be used in the js code
+ */
+export default Root.fromJSON(JSON.parse(skeleton));
