@@ -209,6 +209,11 @@ class CothorityMessages extends CothorityProtobuf {
     return this.decodeMessage('FinalizeResponse', response);
   }
 
+  /**
+   * Create a message request to get the config of a given conode
+   * @param id
+   * @returns {*|Buffer|Uint8Array}
+   */
   createConfigUpdate(id) {
     const fields = {
       id: id
@@ -217,13 +222,22 @@ class CothorityMessages extends CothorityProtobuf {
     return this.encodeMessage('ConfigUpdate', fields);
   }
 
-
+  /**
+   * Return the decoded message of a config update
+   * @param response
+   * @returns {*}
+   */
   decodeConfigUpdateReply(response) {
     response = new Uint8Array(response);
 
     return this.decodeMessage('ConfigUpdateReply', response);
   }
 
+  /**
+   * Create a device structure, that may be added to a config
+   * @param key
+   * @returns {fields}
+   */
   createDevice(key) {
 
     const model = this.getModel('Device');
@@ -235,6 +249,12 @@ class CothorityMessages extends CothorityProtobuf {
     return model.create(fields);
   }
 
+  /**
+   * Create a message request to propose an update to a config
+   * @param id
+   * @param config
+   * @returns {*|Buffer|Uint8Array}
+   */
   createProposeSend(id, config) {
     const fields = {
       id: id,
@@ -248,6 +268,11 @@ class CothorityMessages extends CothorityProtobuf {
     return this.encodeMessage('ProposeSend', fields);
   }
 
+  /**
+   * Create a message request to get the current config update propositions
+   * @param id
+   * @returns {*|Buffer|Uint8Array}
+   */
   createProposeUpdate(id) {
     const fields = {
       id: id
@@ -256,13 +281,25 @@ class CothorityMessages extends CothorityProtobuf {
     return this.encodeMessage('ProposeUpdate', fields);
   }
 
-
+  /**
+   * Return the decoded message of a propose update
+   * @param response
+   * @returns {*}
+   */
   decodeProposeUpdateReply(response) {
     response = new Uint8Array(response);
 
     return this.decodeMessage('ProposeUpdateReply', response);
   }
 
+  /**
+   * Create a message request to vote an update to a config
+   * @param id
+   * @param signer
+   * @param challenge
+   * @param response
+   * @returns {*|Buffer|Uint8Array}
+   */
   createProposeVote(id, signer, challenge, response) {
     const fields = {
       id: id,
