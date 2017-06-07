@@ -22,6 +22,7 @@
   "homepage": "https://github.com/Gilthoniel/CothorityProtoBuf#readme",
   "dependencies": {
     "bytebuffer": "^5.0.1",
+    "file": "^0.2.2",
     "protobufjs": "^6.6.3"
   },
   "devDependencies": {

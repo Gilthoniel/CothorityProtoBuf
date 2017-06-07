@@ -390,9 +390,51 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/index.js~cothoritymessages#createconfigupdate",
+    "class/src/index.js~CothorityMessages.html#instance-method-createConfigUpdate",
+    "src/index.js~CothorityMessages#createConfigUpdate",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#createdevice",
+    "class/src/index.js~CothorityMessages.html#instance-method-createDevice",
+    "src/index.js~CothorityMessages#createDevice",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#createfinalizerequest",
+    "class/src/index.js~CothorityMessages.html#instance-method-createFinalizeRequest",
+    "src/index.js~CothorityMessages#createFinalizeRequest",
+    "method"
+  ],
+  [
     "src/index.js~cothoritymessages#createlatestblockrequest",
     "class/src/index.js~CothorityMessages.html#instance-method-createLatestBlockRequest",
     "src/index.js~CothorityMessages#createLatestBlockRequest",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#createpinrequest",
+    "class/src/index.js~CothorityMessages.html#instance-method-createPinRequest",
+    "src/index.js~CothorityMessages#createPinRequest",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#createproposesend",
+    "class/src/index.js~CothorityMessages.html#instance-method-createProposeSend",
+    "src/index.js~CothorityMessages#createProposeSend",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#createproposeupdate",
+    "class/src/index.js~CothorityMessages.html#instance-method-createProposeUpdate",
+    "src/index.js~CothorityMessages#createProposeUpdate",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#createproposevote",
+    "class/src/index.js~CothorityMessages.html#instance-method-createProposeVote",
+    "src/index.js~CothorityMessages#createProposeVote",
     "method"
   ],
   [
@@ -408,15 +450,45 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/index.js~cothoritymessages#createstoreconfig",
+    "class/src/index.js~CothorityMessages.html#instance-method-createStoreConfig",
+    "src/index.js~CothorityMessages#createStoreConfig",
+    "method"
+  ],
+  [
     "src/index.js~cothoritymessages#createstoreskipblockrequest",
     "class/src/index.js~CothorityMessages.html#instance-method-createStoreSkipBlockRequest",
     "src/index.js~CothorityMessages#createStoreSkipBlockRequest",
     "method"
   ],
   [
+    "src/index.js~cothoritymessages#deccdestoreconfigreply",
+    "class/src/index.js~CothorityMessages.html#instance-method-deccdeStoreConfigReply",
+    "src/index.js~CothorityMessages#deccdeStoreConfigReply",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#decodeconfigupdatereply",
+    "class/src/index.js~CothorityMessages.html#instance-method-decodeConfigUpdateReply",
+    "src/index.js~CothorityMessages#decodeConfigUpdateReply",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#decodefinalizeresponse",
+    "class/src/index.js~CothorityMessages.html#instance-method-decodeFinalizeResponse",
+    "src/index.js~CothorityMessages#decodeFinalizeResponse",
+    "method"
+  ],
+  [
     "src/index.js~cothoritymessages#decodelatestblockresponse",
     "class/src/index.js~CothorityMessages.html#instance-method-decodeLatestBlockResponse",
     "src/index.js~CothorityMessages#decodeLatestBlockResponse",
+    "method"
+  ],
+  [
+    "src/index.js~cothoritymessages#decodeproposeupdatereply",
+    "class/src/index.js~CothorityMessages.html#instance-method-decodeProposeUpdateReply",
+    "src/index.js~CothorityMessages#decodeProposeUpdateReply",
     "method"
   ],
   [

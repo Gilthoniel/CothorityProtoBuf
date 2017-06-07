@@ -212,7 +212,7 @@
     "__docId__": 7,
     "kind": "file",
     "name": "src/index.js",
-    "content": "import CothorityProtobuf from './cothority-protobuf'\n\n/**\n * Helpers to encode and decode messages of the Cothority\n *\n * @author Gaylor Bosson (gaylor.bosson@epfl.ch)\n */\nclass CothorityMessages extends CothorityProtobuf {\n  \n  /**\n   * Create an encoded message to make a sign request to a cothority node\n   * @param {Uint8Array} message - Message to sign stored in a Uint8Array\n   * @param {Array} servers - list of ServerIdentity\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createSignatureRequest(message, servers) {\n    if (!(message instanceof Uint8Array)) {\n      throw new Error(\"message must be a instance of Uint8Array\");\n    }\n    \n    const fields = {\n      message,\n      roster: {\n        list: servers\n      }\n    };\n    \n    return this.encodeMessage('SignatureRequest', fields);\n  }\n  \n  /**\n   * Return the decoded response of a signature request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {Object}\n   */\n  decodeSignatureResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('SignatureResponse', response);\n  }\n  \n  /**\n   * Return the decoded response of a status request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeStatusResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('StatusResponse', response);\n  }\n\n  /**\n   * Create a message to store a new block\n   * @param {Uint8Array} id - ID of the current latest block\n   * @param {Array} servers - list of ServerIdentity\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createStoreSkipBlockRequest(id, servers) {\n    if (!(id instanceof Uint8Array)) {\n      throw new Error(\"message must be a instance of Uint8Array\");\n    }\n\n    return this.encodeMessage('StoreSkipBlockRequest', {\n      LatestID: id,\n      NewBlock: {\n        MaximumHeight: 1,\n        BaseHeight: 1,\n        Data: new Uint8Array([]),\n        Roster: {\n          list: servers\n        }\n      }\n    });\n  }\n\n  /**\n   * Return the decoded message of a store skip block request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeStoreSkipBlockResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('StoreSkipBlockResponse', response);\n  }\n\n  /**\n   * Create a message request to get the latest blocks of a skip-chain\n   * @param {Uint8Array} id - ID of the genesis block of the skip-chain\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createLatestBlockRequest(id) {\n    if (!(id instanceof Uint8Array)) {\n      throw new Error(\"message must be a instance of Uint8Array\");\n    }\n\n    return this.encodeMessage('LatestBlockRequest', {\n      LatestID: id\n    });\n  }\n\n  /**\n   * Return the decoded message of a latest block request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeLatestBlockResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('LatestBlockResponse', response);\n  }\n\n  /**\n   * Create a message request to get a random number\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createRandomMessage() {\n    return this.encodeMessage('RandomRequest');\n  }\n\n  /**\n   * Return the decoded message of a random number request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeRandomResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('RandomResponse', response);\n  }\n  \n}\n\n/**\n * Singleton\n */\nexport default new CothorityMessages();",
+    "content": "import CothorityProtobuf from './cothority-protobuf'\n\n/**\n * Helpers to encode and decode messages of the Cothority\n *\n * @author Gaylor Bosson (gaylor.bosson@epfl.ch)\n */\nclass CothorityMessages extends CothorityProtobuf {\n\n  /**\n   * Create an encoded message to make a sign request to a cothority node\n   * @param {Uint8Array} message - Message to sign stored in a Uint8Array\n   * @param {Array} servers - list of ServerIdentity\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createSignatureRequest(message, servers) {\n    if (!(message instanceof Uint8Array)) {\n      throw new Error(\"message must be a instance of Uint8Array\");\n    }\n\n    const fields = {\n      message,\n      roster: {\n        list: servers\n      }\n    };\n\n    return this.encodeMessage('SignatureRequest', fields);\n  }\n\n  /**\n   * Return the decoded response of a signature request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {Object}\n   */\n  decodeSignatureResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('SignatureResponse', response);\n  }\n\n  /**\n   * Return the decoded response of a status request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeStatusResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('StatusResponse', response);\n  }\n\n  /**\n   * Create a message to store a new block\n   * @param {Uint8Array} id - ID of the current latest block\n   * @param {Array} servers - list of ServerIdentity\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createStoreSkipBlockRequest(id, servers) {\n    if (!(id instanceof Uint8Array)) {\n      throw new Error(\"message must be a instance of Uint8Array\");\n    }\n\n    return this.encodeMessage('StoreSkipBlockRequest', {\n      LatestID: id,\n      NewBlock: {\n        MaximumHeight: 1,\n        BaseHeight: 1,\n        Data: new Uint8Array([]),\n        Roster: {\n          list: servers\n        }\n      }\n    });\n  }\n\n  /**\n   * Return the decoded message of a store skip block request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeStoreSkipBlockResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('StoreSkipBlockResponse', response);\n  }\n\n  /**\n   * Create a message request to get the latest blocks of a skip-chain\n   * @param {Uint8Array} id - ID of the genesis block of the skip-chain\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createLatestBlockRequest(id) {\n    if (!(id instanceof Uint8Array)) {\n      throw new Error(\"message must be a instance of Uint8Array\");\n    }\n\n    return this.encodeMessage('LatestBlockRequest', {\n      LatestID: id\n    });\n  }\n\n  /**\n   * Return the decoded message of a latest block request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeLatestBlockResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('LatestBlockResponse', response);\n  }\n\n  /**\n   * Create a message request to get a random number\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createRandomMessage() {\n    return this.encodeMessage('RandomRequest');\n  }\n\n  /**\n   * Return the decoded message of a random number request\n   * @param {*|Buffer|Uint8Array} response - Response of the Cothority\n   * @returns {*}\n   */\n  decodeRandomResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('RandomResponse', response);\n  }\n\n  /**\n   * Create an encoded message to make a PinRequest to a cothority node\n   * @param pin previously generated by the conode\n   * @param publicKey\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createPinRequest(pin, publicKey) {\n    const fields = {\n      pin: pin,\n      public: publicKey\n    };\n\n    return this.encodeMessage('PinRequest', fields);\n  }\n\n  /**\n   * Create an encoded message to store configuration information of a given PoP party\n   * @param name\n   * @param date\n   * @param location\n   * @param id\n   * @param servers\n   * @param aggregate\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createStoreConfig(name, date, location, id, servers, aggregate) {\n    const fields = {\n      desc: {\n        name: name,\n        dateTime: date,\n        location: location,\n        roster: {\n          id: id,\n          list: servers,\n          aggregate: aggregate\n        }\n      }\n    };\n\n    return this.encodeMessage('StoreConfig', fields);\n  }\n\n  /**\n   * Return the decoded response\n   * @param response\n   * @returns {*}\n   */\n  deccdeStoreConfigReply(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('StoreConfigReply', response);\n  }\n\n  /**\n   * Create an encoded message to finalize on the given descid-popconfig\n   * @param descId\n   * @param attendees\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createFinalizeRequest(descId, attendees) {\n    const fields = {\n      descId: descId,\n      attendees: attendees\n    };\n\n    return this.encodeMessage('FinalizeRequest', fields);\n  }\n\n  /**\n   * Return the decoded response\n   * @param response\n   * @returns {*}\n   */\n  decodeFinalizeResponse(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('FinalizeResponse', response);\n  }\n\n  /**\n   * Create a message request to get the config of a given conode\n   * @param id\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createConfigUpdate(id) {\n    const fields = {\n      id: id\n    };\n\n    return this.encodeMessage('ConfigUpdate', fields);\n  }\n\n  /**\n   * Return the decoded message of a config update\n   * @param response\n   * @returns {*}\n   */\n  decodeConfigUpdateReply(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('ConfigUpdateReply', response);\n  }\n\n  /**\n   * Create a device structure, that may be added to a config\n   * @param key\n   * @returns {fields}\n   */\n  createDevice(key) {\n\n    const model = this.getModel('Device');\n\n    const fields = {\n      point: key\n    };\n\n    return model.create(fields);\n  }\n\n  /**\n   * Create a message request to propose an update to a config\n   * @param id\n   * @param config\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createProposeSend(id, config) {\n    const fields = {\n      id: id,\n      config: {\n        threshold: config.threshold,\n        device: config.device,\n        data: config.data\n      }\n    };\n\n    return this.encodeMessage('ProposeSend', fields);\n  }\n\n  /**\n   * Create a message request to get the current config update propositions\n   * @param id\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createProposeUpdate(id) {\n    const fields = {\n      id: id\n    };\n\n    return this.encodeMessage('ProposeUpdate', fields);\n  }\n\n  /**\n   * Return the decoded message of a propose update\n   * @param response\n   * @returns {*}\n   */\n  decodeProposeUpdateReply(response) {\n    response = new Uint8Array(response);\n\n    return this.decodeMessage('ProposeUpdateReply', response);\n  }\n\n  /**\n   * Create a message request to vote an update to a config\n   * @param id\n   * @param signer\n   * @param challenge\n   * @param response\n   * @returns {*|Buffer|Uint8Array}\n   */\n  createProposeVote(id, signer, challenge, response) {\n    const fields = {\n      id: id,\n      signer: signer,\n        signature: {\n          challenge: challenge,\n          response: response\n        }\n    };\n\n    return this.encodeMessage('ProposeVote', fields);\n  }\n}\n\n/**\n * Singleton\n */\nexport default new CothorityMessages();",
     "static": true,
     "longname": "src/index.js",
     "access": null,
@@ -624,6 +624,598 @@
   },
   {
     "__docId__": 18,
+    "kind": "method",
+    "name": "createPinRequest",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createPinRequest",
+    "access": null,
+    "description": "Create an encoded message to make a PinRequest to a cothority node",
+    "lineNumber": 139,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Buffer|Uint8Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "pin",
+        "description": "previously generated by the conode"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "publicKey",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Buffer",
+        "Uint8Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "name": "createStoreConfig",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createStoreConfig",
+    "access": null,
+    "description": "Create an encoded message to store configuration information of a given PoP party",
+    "lineNumber": 158,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Buffer|Uint8Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "name",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "date",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "location",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "servers",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "aggregate",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Buffer",
+        "Uint8Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 20,
+    "kind": "method",
+    "name": "deccdeStoreConfigReply",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#deccdeStoreConfigReply",
+    "access": null,
+    "description": "Return the decoded response",
+    "lineNumber": 180,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "response",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 21,
+    "kind": "method",
+    "name": "createFinalizeRequest",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createFinalizeRequest",
+    "access": null,
+    "description": "Create an encoded message to finalize on the given descid-popconfig",
+    "lineNumber": 192,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Buffer|Uint8Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "descId",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "attendees",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Buffer",
+        "Uint8Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 22,
+    "kind": "method",
+    "name": "decodeFinalizeResponse",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#decodeFinalizeResponse",
+    "access": null,
+    "description": "Return the decoded response",
+    "lineNumber": 206,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "response",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 23,
+    "kind": "method",
+    "name": "createConfigUpdate",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createConfigUpdate",
+    "access": null,
+    "description": "Create a message request to get the config of a given conode",
+    "lineNumber": 217,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Buffer|Uint8Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Buffer",
+        "Uint8Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 24,
+    "kind": "method",
+    "name": "decodeConfigUpdateReply",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#decodeConfigUpdateReply",
+    "access": null,
+    "description": "Return the decoded message of a config update",
+    "lineNumber": 230,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "response",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 25,
+    "kind": "method",
+    "name": "createDevice",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createDevice",
+    "access": null,
+    "description": "Create a device structure, that may be added to a config",
+    "lineNumber": 241,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{fields}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "fields"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "name": "createProposeSend",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createProposeSend",
+    "access": null,
+    "description": "Create a message request to propose an update to a config",
+    "lineNumber": 258,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Buffer|Uint8Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "config",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Buffer",
+        "Uint8Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "name": "createProposeUpdate",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createProposeUpdate",
+    "access": null,
+    "description": "Create a message request to get the current config update propositions",
+    "lineNumber": 276,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Buffer|Uint8Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Buffer",
+        "Uint8Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "name": "decodeProposeUpdateReply",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#decodeProposeUpdateReply",
+    "access": null,
+    "description": "Return the decoded message of a propose update",
+    "lineNumber": 289,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "response",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "name": "createProposeVote",
+    "memberof": "src/index.js~CothorityMessages",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/index.js~CothorityMessages#createProposeVote",
+    "access": null,
+    "description": "Create a message request to vote an update to a config",
+    "lineNumber": 303,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{*|Buffer|Uint8Array}"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "id",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "signer",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "challenge",
+        "description": ""
+      },
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "response",
+        "description": ""
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "*",
+        "Buffer",
+        "Uint8Array"
+      ],
+      "spread": false,
+      "description": ""
+    }
+  },
+  {
+    "__docId__": 30,
     "kind": "variable",
     "name": "cothorityMessages",
     "memberof": "src/index.js",
@@ -634,7 +1226,7 @@
     "importPath": "cothority-protobuf/src/index.js",
     "importStyle": "cothorityMessages",
     "description": "Singleton",
-    "lineNumber": 138,
+    "lineNumber": 320,
     "type": {
       "types": [
         "src/index.js~CothorityMessages"
@@ -642,7 +1234,7 @@
     }
   },
   {
-    "__docId__": 19,
+    "__docId__": 31,
     "kind": "file",
     "name": "src/models/root.js",
     "content": "import protobuf from \"protobufjs\"\nimport skeleton from './skeleton'\n\nconst {Root} = protobuf;\n\n/**\n * As we need to create a bundle, we cannot use the *.proto files and the a script will wrap\n * them in a skeleton file that contains the JSON representation that can be used in the js code\n */\nexport default Root.fromJSON(JSON.parse(skeleton));",
@@ -653,7 +1245,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 20,
+    "__docId__": 32,
     "kind": "variable",
     "name": "Root",
     "memberof": "src/models/root.js",
@@ -679,7 +1271,7 @@
     }
   },
   {
-    "__docId__": 22,
+    "__docId__": 34,
     "kind": "external",
     "name": "Infinity",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity",
@@ -691,7 +1283,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 23,
+    "__docId__": 35,
     "kind": "external",
     "name": "NaN",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN",
@@ -703,7 +1295,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 24,
+    "__docId__": 36,
     "kind": "external",
     "name": "undefined",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
@@ -715,7 +1307,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 25,
+    "__docId__": 37,
     "kind": "external",
     "name": "null",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null",
@@ -727,7 +1319,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 26,
+    "__docId__": 38,
     "kind": "external",
     "name": "Object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
@@ -739,7 +1331,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 27,
+    "__docId__": 39,
     "kind": "external",
     "name": "object",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object",
@@ -751,7 +1343,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 28,
+    "__docId__": 40,
     "kind": "external",
     "name": "Function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
@@ -763,7 +1355,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 29,
+    "__docId__": 41,
     "kind": "external",
     "name": "function",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function",
@@ -775,7 +1367,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 30,
+    "__docId__": 42,
     "kind": "external",
     "name": "Boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
@@ -787,7 +1379,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 31,
+    "__docId__": 43,
     "kind": "external",
     "name": "boolean",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean",
@@ -799,7 +1391,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 32,
+    "__docId__": 44,
     "kind": "external",
     "name": "Symbol",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol",
@@ -811,7 +1403,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 33,
+    "__docId__": 45,
     "kind": "external",
     "name": "Error",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error",
@@ -823,7 +1415,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 34,
+    "__docId__": 46,
     "kind": "external",
     "name": "EvalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError",
@@ -835,7 +1427,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 35,
+    "__docId__": 47,
     "kind": "external",
     "name": "InternalError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/InternalError",
@@ -847,7 +1439,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 36,
+    "__docId__": 48,
     "kind": "external",
     "name": "RangeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError",
@@ -859,7 +1451,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 37,
+    "__docId__": 49,
     "kind": "external",
     "name": "ReferenceError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError",
@@ -871,7 +1463,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 38,
+    "__docId__": 50,
     "kind": "external",
     "name": "SyntaxError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError",
@@ -883,7 +1475,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 39,
+    "__docId__": 51,
     "kind": "external",
     "name": "TypeError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError",
@@ -895,7 +1487,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 40,
+    "__docId__": 52,
     "kind": "external",
     "name": "URIError",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError",
@@ -907,7 +1499,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 41,
+    "__docId__": 53,
     "kind": "external",
     "name": "Number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
@@ -919,7 +1511,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 42,
+    "__docId__": 54,
     "kind": "external",
     "name": "number",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number",
@@ -931,7 +1523,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 43,
+    "__docId__": 55,
     "kind": "external",
     "name": "Date",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date",
@@ -943,7 +1535,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 44,
+    "__docId__": 56,
     "kind": "external",
     "name": "String",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
@@ -955,7 +1547,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 45,
+    "__docId__": 57,
     "kind": "external",
     "name": "string",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String",
@@ -967,7 +1559,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 46,
+    "__docId__": 58,
     "kind": "external",
     "name": "RegExp",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp",
@@ -979,7 +1571,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 47,
+    "__docId__": 59,
     "kind": "external",
     "name": "Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array",
@@ -991,7 +1583,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 48,
+    "__docId__": 60,
     "kind": "external",
     "name": "Int8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array",
@@ -1003,7 +1595,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 49,
+    "__docId__": 61,
     "kind": "external",
     "name": "Uint8Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array",
@@ -1015,7 +1607,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 50,
+    "__docId__": 62,
     "kind": "external",
     "name": "Uint8ClampedArray",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray",
@@ -1027,7 +1619,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 51,
+    "__docId__": 63,
     "kind": "external",
     "name": "Int16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array",
@@ -1039,7 +1631,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 52,
+    "__docId__": 64,
     "kind": "external",
     "name": "Uint16Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array",
@@ -1051,7 +1643,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 53,
+    "__docId__": 65,
     "kind": "external",
     "name": "Int32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array",
@@ -1063,7 +1655,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 54,
+    "__docId__": 66,
     "kind": "external",
     "name": "Uint32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array",
@@ -1075,7 +1667,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 55,
+    "__docId__": 67,
     "kind": "external",
     "name": "Float32Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array",
@@ -1087,7 +1679,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 56,
+    "__docId__": 68,
     "kind": "external",
     "name": "Float64Array",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array",
@@ -1099,7 +1691,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 57,
+    "__docId__": 69,
     "kind": "external",
     "name": "Map",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
@@ -1111,7 +1703,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 58,
+    "__docId__": 70,
     "kind": "external",
     "name": "Set",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
@@ -1123,7 +1715,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 59,
+    "__docId__": 71,
     "kind": "external",
     "name": "WeakMap",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap",
@@ -1135,7 +1727,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 60,
+    "__docId__": 72,
     "kind": "external",
     "name": "WeakSet",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet",
@@ -1147,7 +1739,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 61,
+    "__docId__": 73,
     "kind": "external",
     "name": "ArrayBuffer",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer",
@@ -1159,7 +1751,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 62,
+    "__docId__": 74,
     "kind": "external",
     "name": "DataView",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView",
@@ -1171,7 +1763,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 63,
+    "__docId__": 75,
     "kind": "external",
     "name": "JSON",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON",
@@ -1183,7 +1775,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 64,
+    "__docId__": 76,
     "kind": "external",
     "name": "Promise",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise",
@@ -1195,7 +1787,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 65,
+    "__docId__": 77,
     "kind": "external",
     "name": "Generator",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator",
@@ -1207,7 +1799,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 66,
+    "__docId__": 78,
     "kind": "external",
     "name": "GeneratorFunction",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/GeneratorFunction",
@@ -1219,7 +1811,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 67,
+    "__docId__": 79,
     "kind": "external",
     "name": "Reflect",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect",
@@ -1231,7 +1823,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 68,
+    "__docId__": 80,
     "kind": "external",
     "name": "Proxy",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy",
@@ -1244,7 +1836,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 70,
+    "__docId__": 82,
     "kind": "external",
     "name": "CanvasRenderingContext2D",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D",
@@ -1256,7 +1848,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 71,
+    "__docId__": 83,
     "kind": "external",
     "name": "DocumentFragment",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment",
@@ -1268,7 +1860,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 72,
+    "__docId__": 84,
     "kind": "external",
     "name": "Element",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Element",
@@ -1280,7 +1872,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 73,
+    "__docId__": 85,
     "kind": "external",
     "name": "Event",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Event",
@@ -1292,7 +1884,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 74,
+    "__docId__": 86,
     "kind": "external",
     "name": "Node",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/Node",
@@ -1304,7 +1896,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 75,
+    "__docId__": 87,
     "kind": "external",
     "name": "NodeList",
     "externalLink": "https://developer.mozilla.org/en-US/docs/Web/API/NodeList",
@@ -1316,7 +1908,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 76,
+    "__docId__": 88,
     "kind": "external",
     "name": "XMLHttpRequest",
     "externalLink": "https://developer.mozilla.org/en/docs/Web/API/XMLHttpRequest",
@@ -1328,7 +1920,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 77,
+    "__docId__": 89,
     "kind": "external",
     "name": "AudioContext",
     "externalLink": "https://developer.mozilla.org/en/docs/Web/API/AudioContext",
